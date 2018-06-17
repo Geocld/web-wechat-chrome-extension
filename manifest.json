@@ -1,0 +1,28 @@
+{
+  "name": "网页版微信",
+  "manifest_version": 2,
+  "version": "1.0.0",
+  "description": "网页版微信扩展，可显示未读消息，不含任何恶意广告",
+  "icons": {
+    "20": "images/20.png",
+    "19": "images/20.png",
+    "30": "images/20.png",
+    "48": "images/20.png",
+    "128": "images/20.png"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "browser_action": {
+    "default_icon": "images/20.png",
+    "default_title": "这是一个网页版微信",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [{
+    "js": [ "js/wxobserve.js" ],
+    "matches": [ "*://wx.qq.com/*" ],
+    "run_at": "document_start"
+  }],
+  "permissions": ["tabs", "https://wx.qq.com/*"],
+  "homepage_url": "http://geocld.github.io/"
+}
