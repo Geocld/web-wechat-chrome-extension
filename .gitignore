@@ -12,5 +12,6 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+*.zip
 
 config/index.js

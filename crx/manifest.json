@@ -1,8 +1,8 @@
 {
-  "name": "网页版微信",
+  "name": "微信网页版",
   "manifest_version": 2,
-  "version": "1.0.0",
-  "description": "网页版微信扩展，可显示未读消息，不含任何恶意广告",
+  "version": "1.0.1",
+  "description": "更好用的微信网页版扩展，可显示未读消息，不含任何恶意广告",
   "icons": {
     "20": "images/20.png",
     "19": "images/20.png",
@@ -15,7 +15,7 @@
   },
   "browser_action": {
     "default_icon": "images/20.png",
-    "default_title": "这是一个网页版微信",
+    "default_title": "更好用的网页版微信扩展，可显示未读消息，不含任何恶意广告",
     "default_popup": "popup.html"
   },
   "content_scripts": [{
