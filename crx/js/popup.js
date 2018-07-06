@@ -22,8 +22,9 @@ function viewWx () {
                 url: 'https://wx.qq.com',
                 type: 'popup',
                 focused: true
-            }, function (window) {
-                console.log(window);
+            }, function (w) {
+                console.log(w);
+                window.close();
             });
         }
     });
@@ -35,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const ACCESS_BTN = document.getElementById("access_btn");
     const VIEW_BTN = document.getElementById("view_btn");
     const UNREAD = document.getElementById("unread");
+    const LOGO = document.getElementById("wx-logo");
+    let hasOpenWx =  false;
 
     chrome.windows.getAll({
         populate: true
@@ -42,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         wins.forEach(function (win) {
             win.tabs.forEach(function (tab) {
                 if (/wx\.qq\.com/ig.test(tab.url)) {
+                    hasOpenWx = true;
                     chrome.tabs.executeScript(tab.id, {
                        file: 'js/wxInfo.js'
                     }, function (res) {
@@ -59,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                             ACCESS_BTN.style.display = 'inline-block';
                             LOGIN_BTN.style.display = 'none';
+                            LOGO.style.display = 'none';
                         } else {
                             ACCESS_BTN.style.display = 'none';
                             LOGIN_BTN.style.display = 'inline-block';
@@ -66,6 +71,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 }
             });
+            if (!hasOpenWx) {
+                ACCESS_BTN.style.display = 'none';
+                LOGIN_BTN.style.display = 'inline-block';
+            }
         });
     });
 
