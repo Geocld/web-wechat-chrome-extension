@@ -1,6 +1,3 @@
-/**
- * Created by lijiahao on 2018/6/13.
- */
 var open_wx = function () {
     chrome.browserAction.setBadgeText({text: ''});
     chrome.browserAction.setBadgeBackgroundColor({color: '#ea594b'});
@@ -15,7 +12,7 @@ var open_wx = function () {
                         if (/wx\.qq\.com/ig.test(tab.url)) {
                             setTimeout(function () {
                                 chrome.tabs.executeScript(tab.id, {
-                                    file: 'js/wxInfo.js'
+                                    file: 'chrome/wxInfo.js'
                                 }, function (res) {
                                     var info = res[0];
                                     if (info.login) { // 已登录

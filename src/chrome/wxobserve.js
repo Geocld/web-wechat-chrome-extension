@@ -1,10 +1,6 @@
-/**
- * Created by lijiahao on 2018/6/16.
- */
-
 document.addEventListener('DOMContentLoaded', function() {
-    var NEWEST = new Date().getTime();
-    var targetNode = document.body;
+    let NEWEST = new Date().getTime();
+    const targetNode = document.body;
     var callback = function () {
         const now = new Date().getTime();
         if (now - NEWEST > 100) {
@@ -24,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    var observer = new MutationObserver(callback);
+    const observer = new MutationObserver(callback);
 
     observer.observe(targetNode, { attributes: true, childList: true, subtree: true, characterData: true });
-});
+})

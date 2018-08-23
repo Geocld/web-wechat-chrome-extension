@@ -1,6 +1,3 @@
-/**
- * Created by lijiahao on 2018/6/15.
- */
 function getWxInfo () {
     const avatar = document.getElementsByClassName("avatar")[0].getElementsByTagName("img")[0];
     const nickname = document.getElementsByClassName("nickname")[0].getElementsByClassName("display_name")[0].innerText;
