@@ -48,7 +48,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "build-chrome-ext": "node scripts/build.js && gulp minify && gulp minify-background"
+    "build-chrome-ext": "node scripts/build.js && gulp minify && gulp minify-background",
   },
   "jest": {
     "collectCoverageFrom": [
@@ -97,7 +97,7 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-uglify-es": "^1.0.4",
+    "gulp-minify": "^3.1.0",
     "gulp-util": "^3.0.8"
   }
 }

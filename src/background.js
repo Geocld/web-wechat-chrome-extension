@@ -36,7 +36,7 @@ var open_wx = function () {
                 });
             });
         }
-    })
+    });
 }
 
 open_wx();

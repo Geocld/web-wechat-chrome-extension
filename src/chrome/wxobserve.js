@@ -23,4 +23,4 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new MutationObserver(callback);
 
     observer.observe(targetNode, { attributes: true, childList: true, subtree: true, characterData: true });
-})
+});

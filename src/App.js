@@ -42,7 +42,6 @@ class App extends Component {
 
     viewWx = () => {
         let windowId = null;
-        chrome.browserAction.setBadgeText({text: ''});
         chrome.windows.getAll({
             populate: true
         }, function (windows) {
