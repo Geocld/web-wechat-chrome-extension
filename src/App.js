@@ -6,10 +6,22 @@ class App extends Component {
     state = {
         hasOpenWx: false,
         isLogin: false,
-        userInfo: null
+        userInfo: null,
+        chatList: [] // 聊天列表
     }
 
     componentWillMount() {
+
+        // 监听content script那边发送过来的数据（聊天列表、用户列表）
+        chrome.runtime.onMessage.addListener((request) => {
+            if (request.chatList) {
+                this.setState({
+                    chatList: request.chatList.chatList
+                });
+                console.log(this.state.chatList)
+            }
+        });
+
         chrome.windows.getAll({
             populate: true
         }, (wins) => {
@@ -19,6 +31,11 @@ class App extends Component {
                         this.setState({
                             hasOpenWx: true
                         });
+
+                        chrome.tabs.sendMessage(tab.id, {getChatList: true}, function(response){
+                            console.log('message has send to wxobserve.js')
+                        });
+
                         chrome.tabs.executeScript(tab.id, {
                             file: 'chrome/wxInfo.js'
                         }, res => {

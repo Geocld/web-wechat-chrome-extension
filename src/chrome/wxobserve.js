@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    // popup通知content script才去拿数据
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        if (request.getChatList) {
+            injectScript(chrome.extension.getURL('chrome/inject.js'), 'body');
+            window.addEventListener("message", function(e) {
+                // console.log('收到了来自inject script的信息:')
+                // console.log(e.data.data);
+                // 将inject script拿到的数据发给popup展示
+                chrome.runtime.sendMessage({chatList: e.data.data});
+            }, false);
+        }
+    });
+
+
     let NEWEST = new Date().getTime();
     const targetNode = document.body;
     var callback = function () {
@@ -24,3 +39,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     observer.observe(targetNode, { attributes: true, childList: true, subtree: true, characterData: true });
 });
+
+function injectScript(file_path, tag) {
+    var node = document.getElementsByTagName(tag)[0];
+    var script = document.createElement('script');
+    script.setAttribute('type', 'text/javascript');
+    script.setAttribute('src', file_path);
+    script.onload = function() {
+        // 执行完后移除掉
+        this.parentNode.removeChild(this);
+    };
+    node.appendChild(script);
+}
+

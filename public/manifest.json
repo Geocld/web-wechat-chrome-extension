@@ -24,5 +24,8 @@
     "run_at": "document_start"
   }],
   "permissions": ["tabs", "https://wx.qq.com/*"],
-  "homepage_url": "https://github.com/Geocld/web-wechat-chrome-extension"
+  "homepage_url": "https://github.com/Geocld/web-wechat-chrome-extension",
+  "web_accessible_resources": [
+    "chrome/inject.js"
+  ]
 }
