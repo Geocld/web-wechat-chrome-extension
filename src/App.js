@@ -1,4 +1,11 @@
 import React, {Component} from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Badge from 'material-ui/Badge';
+import Avatar from 'material-ui/Avatar';
+import List from 'material-ui/List/List';
+import ListItem from 'material-ui/List/ListItem';
+import Divider from 'material-ui/Divider';
+import FlatButton from 'material-ui/FlatButton';
 import './App.css';
 
 class App extends Component {
@@ -10,7 +17,7 @@ class App extends Component {
         chatList: [] // 聊天列表
     }
 
-    componentWillMount() {
+    componentWillMount()  {
 
         // 监听content script那边发送过来的数据（聊天列表、用户列表）
         chrome.runtime.onMessage.addListener((request) => {
@@ -103,10 +110,18 @@ class App extends Component {
         const {isLogin, userInfo} = this.state;
         return (
             (isLogin && !!userInfo) ? (
-                <div className="user-info">
-                    <span><img className="avatar" src={ userInfo.avatar } alt="avatar"/></span>
-                    <span className="nickname">{ userInfo.nickname }</span>
-                </div>
+                <MuiThemeProvider>
+                    <List>
+                        <ListItem
+                            disabled={true}
+                            leftAvatar={
+                                <Avatar src={ userInfo.avatar } />
+                            }
+                        >
+                            <span className="nickname">{ userInfo.nickname }</span>
+                        </ListItem>
+                    </List>
+                </MuiThemeProvider>
             ) : null
         )
     }
@@ -136,19 +151,99 @@ class App extends Component {
     _renderButton = () => {
         const { isLogin } = this.state;
         return (
-            <div className="btn-wrap">
-                <span className="btn" onClick={this.viewWx}>{ isLogin ? '进入完整版' : '登陆' }</span>
-            </div>
+            <MuiThemeProvider>
+                <FlatButton label={ isLogin ? '进入完整版' : '登陆' }
+                            fullWidth={true}
+                            labelStyle={{ color: '#fff' }}
+                            onClick={this.viewWx}
+                />
+            </MuiThemeProvider>
         )
     }
 
+    _renderChatList = () => {
+        const {isLogin, userInfo, chatList} = this.state;
+        if (!isLogin) {
+            return null;
+        } else {
+            return (
+                <MuiThemeProvider>
+                    <List className="list">
+                        {
+                            chatList.map((item, idx) => {
+                                return (
+                                    <div key={idx}>
+                                        <ListItem
+                                            leftAvatar={
+                                                !!item.NoticeCount ?
+                                                    item.MemberList.length > 0 ? (
+                                                    <Badge
+                                                        style={{ top: '-2px', left: '4px' }}
+                                                        badgeContent={''}
+                                                        secondary={true}
+                                                        badgeStyle={{
+                                                            top: 20,
+                                                            right: 20,
+                                                            width: '12px',
+                                                            height: '12px',
+                                                            fontSize: '10px',
+                                                            backgroundColor: '#d44139'
+                                                        }}
+                                                    >
+                                                        <Avatar src={'https://wx.qq.com' + item.HeadImgUrl} />
+                                                    </Badge>
+                                                ) : (
+                                                    <Badge
+                                                        style={{ top: '-2px', left: '4px' }}
+                                                        badgeContent={item.NoticeCount}
+                                                        secondary={true}
+                                                        badgeStyle={{
+                                                            top: 20,
+                                                            right: 20,
+                                                            backgroundColor: '#d44139'
+                                                        }}
+                                                    >
+                                                        <Avatar src={'https://wx.qq.com' + item.HeadImgUrl} />
+                                                    </Badge>
+                                                )
+                                             : (
+                                                    <Avatar src={'https://wx.qq.com' + item.HeadImgUrl} />
+                                                )
+                                            }
+                                            primaryText={
+                                                <div className="chatNickName">{ item.NickName }</div>
+                                            }
+                                            secondaryText={
+                                                <p>
+                                                    <span style={{color: '#989898', fontSize: '13px'}}>
+                                                        {item.MMDigest}
+                                                    </span>
+                                                </p>
+                                            }
+                                            secondaryTextLines={1}
+                                        />
+                                        <Divider inset={true} style={{backgroundColor: '#292c33'}} />
+                                    </div>
+                                )
+                            })
+                        }
+                    </List>
+                </MuiThemeProvider>
+            )
+        }
+    }
+
     render () {
+        const { isLogin } = this.state;
         return (
             <div className="wrap">
-                <h2 className="title">欢迎使用微信网页版</h2>
+                {
+                    isLogin ? null : (<h2 className="title">欢迎使用微信网页版</h2>)
+                }
+
                 { this._renderLogo() }
                 { this._renderUserInfo() }
-                { this._renderUnRead() }
+                { this._renderChatList() }
                 { this._renderButton() }
             </div>
         );

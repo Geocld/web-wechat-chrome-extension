@@ -1,10 +1,27 @@
-.wrap {  width: 200px; background: #2f3238; color: #fff; text-align: center; }
+.wrap {  width: 300px; background: #2f3238; color: #fff; }
 .title { font-size: 16px; font-weight: bold; padding: 10px 0; }
 .user-info { margin-bottom: 15px; }
 .user-info .avatar { display: inline-block; width: 40px; height: 40px; vertical-align: top; }
-.user-info .nickname { display: inline-block; padding-top: 10px; padding-left: 10px; max-width: 120px; overflow: hidden;  text-overflow:ellipsis;  white-space: nowrap; }
+.nickname { color: #fff; display: inline-block; max-width: 120px; overflow: hidden; text-overflow:ellipsis;  white-space: nowrap; }
+.chatNickName { font-size: 13px; color: #fff; max-width: 120px; overflow: hidden; text-overflow:ellipsis;  white-space: nowrap; }
 .unread { font-size: 12px; }
 .unread .view { color: #5186ed; text-decoration: underline; cursor: pointer; }
 .btn-wrap { padding-top: 5px; padding-bottom: 15px; }
 .btn-wrap .btn { cursor: pointer; font-size: 12px; }
 .btn-wrap .btn:hover { text-decoration: underline; color: #5186ed; }
+
+.list { max-height: 400px; overflow-y: auto; overflow-x: hidden; }
+.list::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+.list::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
+}
+.list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background: rgba(0,0,0,0.1);
+}
