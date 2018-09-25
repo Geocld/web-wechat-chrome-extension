@@ -1,9 +1,10 @@
-.wrap {  width: 300px; background: #2f3238; color: #fff; }
-.title { font-size: 16px; font-weight: bold; padding: 10px 0; }
+.wrap {  width: 280px; background: #2f3238; color: #fff; }
+.title { font-size: 16px; font-weight: bold; padding: 10px 0; text-align: center; }
 .user-info { margin-bottom: 15px; }
 .user-info .avatar { display: inline-block; width: 40px; height: 40px; vertical-align: top; }
 .nickname { color: #fff; display: inline-block; max-width: 120px; overflow: hidden; text-overflow:ellipsis;  white-space: nowrap; }
-.chatNickName { font-size: 13px; color: #fff; max-width: 120px; overflow: hidden; text-overflow:ellipsis;  white-space: nowrap; }
+.chatNickName { position: relative; font-size: 13px; color: #fff; padding-right: 30px; overflow: hidden; text-overflow:ellipsis;  white-space: nowrap; }
+.chatNickName .time { position: absolute; top: 0; right: 0; font-size: 12px; }
 .unread { font-size: 12px; }
 .unread .view { color: #5186ed; text-decoration: underline; cursor: pointer; }
 .btn-wrap { padding-top: 5px; padding-bottom: 15px; }

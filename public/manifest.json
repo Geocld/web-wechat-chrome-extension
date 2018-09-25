@@ -26,6 +26,7 @@
   "permissions": ["tabs", "https://wx.qq.com/*"],
   "homepage_url": "https://github.com/Geocld/web-wechat-chrome-extension",
   "web_accessible_resources": [
-    "chrome/inject.js"
+    "chrome/catchChatList.js",
+    "chrome/activeChatItem.js"
   ]
 }

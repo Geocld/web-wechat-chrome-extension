@@ -6,6 +6,7 @@ import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
+import CircularProgress from 'material-ui/CircularProgress';
 import './App.css';
 
 class App extends Component {
@@ -95,6 +96,27 @@ class App extends Component {
         });
     }
 
+    activeChat = (username) => {
+        chrome.windows.getAll({
+            populate: true
+        }, (wins) => {
+            wins.forEach(win => {
+                win.tabs.forEach(tab => {
+                    if (/wx\.qq\.com/ig.test(tab.url)) {
+                        this.setState({
+                            hasOpenWx: true
+                        });
+
+                        chrome.tabs.sendMessage(tab.id, {username: username}, function(response){
+                            console.log('message has send to wxobserve.js')
+                        });
+                        this.viewWx();
+                    }
+                });
+            });
+        });
+    }
+
     _renderLogo = () => {
         const {isLogin} = this.state;
         return (
@@ -151,13 +173,15 @@ class App extends Component {
     _renderButton = () => {
         const { isLogin } = this.state;
         return (
-            <MuiThemeProvider>
-                <FlatButton label={ isLogin ? '进入完整版' : '登陆' }
-                            fullWidth={true}
-                            labelStyle={{ color: '#fff' }}
-                            onClick={this.viewWx}
-                />
-            </MuiThemeProvider>
+            <div style={{ borderTop: '1px solid rgba(255, 255, 255, .4)' }}>
+                <MuiThemeProvider>
+                    <FlatButton label={ isLogin ? '进入完整版' : '登录' }
+                                fullWidth={true}
+                                labelStyle={{ color: '#fff' }}
+                                onClick={this.viewWx}
+                    />
+                </MuiThemeProvider>
+            </div>
         )
     }
 
@@ -166,6 +190,16 @@ class App extends Component {
         if (!isLogin) {
             return null;
         } else {
+            if (!chatList.length) {
+                return (
+                    <MuiThemeProvider>
+                        <div style={{textAlign: 'center'}}>
+                            <CircularProgress />
+                            <div style={{fontSize: '12px', paddingBottom: '10px'}}>聊天列表获取中...</div>
+                        </div>
+                    </MuiThemeProvider>
+                )
+            }
             return (
                 <MuiThemeProvider>
                     <List className="list">
@@ -176,7 +210,7 @@ class App extends Component {
                                         <ListItem
                                             leftAvatar={
                                                 !!item.NoticeCount ?
-                                                    item.MemberList.length > 0 ? (
+                                                    item.MMInChatroom && item.Statues == 0 ? (
                                                     <Badge
                                                         style={{ top: '-2px', left: '4px' }}
                                                         badgeContent={''}
@@ -198,6 +232,8 @@ class App extends Component {
                                                         badgeContent={item.NoticeCount}
                                                         secondary={true}
                                                         badgeStyle={{
+                                                            width: 16,
+                                                            height: 16,
                                                             top: 20,
                                                             right: 20,
                                                             backgroundColor: '#d44139'
@@ -208,19 +244,28 @@ class App extends Component {
                                                 )
                                              : (
                                                     <Avatar src={'https://wx.qq.com' + item.HeadImgUrl} />
+
                                                 )
                                             }
                                             primaryText={
-                                                <div className="chatNickName">{ item.NickName }</div>
+                                                <div className="chatNickName">
+                                                    { item.NickName }
+                                                    {
+                                                        !!item.MMDigestTime ? <span className="time">{ item.MMDigestTime }</span> : null
+                                                    }
+                                                </div>
                                             }
                                             secondaryText={
                                                 <p>
-                                                    <span style={{color: '#989898', fontSize: '13px'}}>
-                                                        {item.MMDigest}
+                                                    <span style={{color: '#989898', fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block'}}>
+                                                        {!!item.NoticeCount && item.MMInChatroom && item.Statues == 0 ? `[${item.NoticeCount}条]${item.MMDigest}` : item.MMDigest}
                                                     </span>
                                                 </p>
                                             }
                                             secondaryTextLines={1}
+                                            onClick={() => {
+                                                this.activeChat(item.UserName);
+                                            }}
                                         />
                                         <Divider inset={true} style={{backgroundColor: '#292c33'}} />
                                     </div>
