@@ -27,6 +27,8 @@
   "homepage_url": "https://github.com/Geocld/web-wechat-chrome-extension",
   "web_accessible_resources": [
     "chrome/catchChatList.js",
-    "chrome/activeChatItem.js"
+    "chrome/activeChatItem.js",
+    "chrome/blurPage.js",
+    "chrome/loginOut.js"
   ]
 }

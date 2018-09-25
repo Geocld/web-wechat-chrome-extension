@@ -117,6 +117,27 @@ class App extends Component {
         });
     }
 
+    loginout = () => {
+        chrome.windows.getAll({
+            populate: true
+        }, (wins) => {
+            wins.forEach(win => {
+                win.tabs.forEach(tab => {
+                    if (/wx\.qq\.com/ig.test(tab.url)) {
+                        this.setState({
+                            hasOpenWx: true
+                        });
+
+                        chrome.tabs.sendMessage(tab.id, {loginout: true}, function(response){
+                            console.log('message has send to wxobserve.js')
+                        });
+                        window.close();
+                    }
+                });
+            });
+        });
+    }
+
     _renderLogo = () => {
         const {isLogin} = this.state;
         return (
@@ -140,7 +161,10 @@ class App extends Component {
                                 <Avatar src={ userInfo.avatar } />
                             }
                         >
-                            <span className="nickname">{ userInfo.nickname }</span>
+                            <div className="nickname" style={{ position: 'relative' }}>
+                                { userInfo.nickname }
+                                <span className="loginout" onClick={this.loginout}>退出</span>
+                            </div>
                         </ListItem>
                     </List>
                 </MuiThemeProvider>

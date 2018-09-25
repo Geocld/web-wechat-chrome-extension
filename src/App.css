@@ -2,7 +2,9 @@
 .title { font-size: 16px; font-weight: bold; padding: 10px 0; text-align: center; }
 .user-info { margin-bottom: 15px; }
 .user-info .avatar { display: inline-block; width: 40px; height: 40px; vertical-align: top; }
-.nickname { color: #fff; display: inline-block; max-width: 120px; overflow: hidden; text-overflow:ellipsis;  white-space: nowrap; }
+.nickname { position: relative; color: #fff; padding-right: 30px; overflow: hidden; text-overflow:ellipsis;  white-space: nowrap; }
+.nickname .loginout { position: absolute; right: 0; top: 0; font-size: 12px; cursor: pointer; }
+.nickname .loginout:hover { color: #5186ed; }
 .chatNickName { position: relative; font-size: 13px; color: #fff; padding-right: 30px; overflow: hidden; text-overflow:ellipsis;  white-space: nowrap; }
 .chatNickName .time { position: absolute; top: 0; right: 0; font-size: 12px; }
 .unread { font-size: 12px; }

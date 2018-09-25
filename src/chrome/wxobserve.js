@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    window.addEventListener('blur', function() {
+        // focusLost reset chat item
+        // console.log('focusLost');
+        injectScript(chrome.extension.getURL('chrome/blurPage.js'), 'body');
+    })
+
     // popup通知content script才去拿数据
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (request.getChatList) {
@@ -14,6 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (request.username) {
             injectScript(chrome.extension.getURL('chrome/activeChatItem.js'), 'body', { username: request.username });
+        }
+
+        if (request.loginout) {
+            injectScript(chrome.extension.getURL('chrome/loginOut.js'), 'body');
         }
     });
 
