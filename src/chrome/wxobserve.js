@@ -6,17 +6,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('blur', function() {
         // focusLost reset chat item
-        isLost = true;
-        resetTimer = setTimeout(() => {
-            injectScript(chrome.extension.getURL('chrome/blurPage.js'), 'body');
-        }, resetTime);
+        // isLost = true;
+        // resetTimer = setTimeout(() => {
+        //     injectScript(chrome.extension.getURL('chrome/blurPage.js'), 'body');
+        // }, resetTime);
     });
     window.addEventListener('focus', function() {
-        if (resetTimer) {
-            resetTimer = null;
-            isLost = false;
-            resetTime = 60 * 1000 * 2;
-        }
+        // if (resetTimer) {
+        //     resetTimer = null;
+        //     isLost = false;
+        //     resetTime = 60 * 1000 * 2;
+        // }
     });
 
     // popup通知content script才去拿数据
