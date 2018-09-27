@@ -1,10 +1,23 @@
+let resetTime = 60 * 1000 * 2;
+let isLost = false;
+let resetTimer = null;
+
 document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('blur', function() {
         // focusLost reset chat item
-        // console.log('focusLost');
-        injectScript(chrome.extension.getURL('chrome/blurPage.js'), 'body');
-    })
+        isLost = true;
+        resetTimer = setTimeout(() => {
+            injectScript(chrome.extension.getURL('chrome/blurPage.js'), 'body');
+        }, resetTime);
+    });
+    window.addEventListener('focus', function() {
+        if (resetTimer) {
+            resetTimer = null;
+            isLost = false;
+            resetTime = 60 * 1000 * 2;
+        }
+    });
 
     // popup通知content script才去拿数据
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {

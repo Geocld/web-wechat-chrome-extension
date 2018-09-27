@@ -1,7 +1,7 @@
 {
   "name": "微信网页版",
   "manifest_version": 2,
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "更好用的微信网页版扩展，可显示未读消息，从聊天列表快速查看信息，不含任何恶意广告。",
   "icons": {
     "20": "images/20.png",
